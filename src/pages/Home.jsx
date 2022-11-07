@@ -40,8 +40,8 @@ export const Home = () => {
         <Categories value={categoryId} onclickCategory={(id) => setCategoryId(id)} />
         <Sort value={sortType} onclickSortType={(id) => setSrtType(id)} />
       </div>
-      <h2 class='content__title'>Все пиццы</h2>
-      <div class='content__items'>{isLoading ? skeletons : items}</div>
+      <h2 className='content__title'>Все пиццы</h2>
+      <div className='content__items'>{isLoading ? skeletons : items}</div>
       <Pagination onChangePage={(number) => setCurrentPage(number)} />
     </div>
   );

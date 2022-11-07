@@ -12,8 +12,8 @@ export const Sort = ({ value, onclickSortType }) => {
     setIsVisablePopup(false);
   };
   return (
-    <div class='sort'>
-      <div class='sort__label'>
+    <div className='sort'>
+      <div className='sort__label'>
         <svg
           width='10'
           height='6'
@@ -29,7 +29,7 @@ export const Sort = ({ value, onclickSortType }) => {
         <span onClick={() => setIsVisablePopup(!isVisablePopup)}>{value.name}</span>
       </div>
       {isVisablePopup && (
-        <div class='sort__popup'>
+        <div className='sort__popup'>
           <ul>
             {list.map((obj, id) => (
               <li
