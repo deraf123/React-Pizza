@@ -1,17 +1,20 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useContext } from 'react';
+import { SearchContext } from '../App';
 import { Categories } from '../components/Categories/Categories';
 import { Pagination } from '../components/Pagination/Pagination';
 import { PizzaBlock } from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import { Sort } from '../components/Sort/Sort';
 
-export const Home = ({ searchValue }) => {
+export const Home = () => {
   const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [categoryId, setCategoryId] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortType, setSrtType] = useState({ name: 'популярности', sortProperty: 'rating' });
+  const { searchValue } = useContext(SearchContext);
   useEffect(() => {
     setIsLoading(true);
 
@@ -30,7 +33,7 @@ export const Home = ({ searchValue }) => {
   }, [categoryId, sortType, searchValue, currentPage]);
 
   const items = pizzas.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
-  const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index} />);
+  const skeletons = [...new Array(4)].map((_, index) => <Skeleton key={index} />);
   return (
     <div className='container'>
       <div className='content__top'>

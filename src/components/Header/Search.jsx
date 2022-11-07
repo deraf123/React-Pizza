@@ -1,7 +1,10 @@
 import React from 'react';
+import { useContext } from 'react';
+import { SearchContext } from '../../App';
 import s from './Search.module.scss';
 
-export const Search = ({ setSearchValue, searchValue }) => {
+export const Search = () => {
+  const { searchValue, setSearchValue } = useContext(SearchContext);
   return (
     <input
       onChange={(event) => setSearchValue(event.target.value)}
