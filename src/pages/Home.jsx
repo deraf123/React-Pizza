@@ -1,23 +1,31 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { SearchContext } from '../App';
 import { Categories } from '../components/Categories/Categories';
 import { Pagination } from '../components/Pagination/Pagination';
 import { PizzaBlock } from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import { Sort } from '../components/Sort/Sort';
+import { setCategoryId } from '../redux/slices/filterSlice';
 
 export const Home = () => {
+  const dispatch = useDispatch();
+  const categoryId = useSelector((state) => state.filterSlice.categoryId);
+  const sortType = useSelector((state) => state.filterSlice.sort.sortProperty);
   const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [categoryId, setCategoryId] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortType, setSrtType] = useState({ name: 'популярности', sortProperty: 'rating' });
   const { searchValue } = useContext(SearchContext);
+
+  const onclickCategory = (id) => {
+    console.log(id);
+    dispatch(setCategoryId(id));
+  };
+
   useEffect(() => {
     setIsLoading(true);
-
     const search = searchValue ? `&search=${searchValue}` : '';
     axios
       .get(
@@ -37,8 +45,8 @@ export const Home = () => {
   return (
     <div className='container'>
       <div className='content__top'>
-        <Categories value={categoryId} onclickCategory={(id) => setCategoryId(id)} />
-        <Sort value={sortType} onclickSortType={(id) => setSrtType(id)} />
+        <Categories value={categoryId} onclickCategory={onclickCategory} />
+        <Sort />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>{isLoading ? skeletons : items}</div>
