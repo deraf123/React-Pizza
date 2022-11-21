@@ -1,22 +1,37 @@
 import React from 'react';
+import { useEffect } from 'react';
+import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSort } from '../../redux/slices/filterSlice';
-
+export const sortList = [
+  { name: 'популярности', sortProperty: 'rating' },
+  { name: 'цене', sortProperty: 'price' },
+  { name: 'алфавиту', sortProperty: 'title' },
+];
 export const Sort = () => {
   const dispatch = useDispatch();
   const sort = useSelector((state) => state.filterSlice.sort);
   const [isVisablePopup, setIsVisablePopup] = React.useState(false);
-  const list = [
-    { name: 'популярности', sortProperty: 'rating' },
-    { name: 'цене', sortProperty: 'price' },
-    { name: 'алфавиту', sortProperty: 'title' },
-  ];
+  const sortRef = useRef();
+
   const clickActivSelecred = (obj) => {
     dispatch(setSort(obj));
     setIsVisablePopup(false);
   };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.path.includes(sortRef.current)) {
+        setIsVisablePopup(false);
+      }
+    };
+    document.body.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.body.addEventListener('click', handleClickOutside);
+    };
+  }, []);
   return (
-    <div className='sort'>
+    <div ref={sortRef} className='sort'>
       <div className='sort__label'>
         <svg
           width='10'
@@ -35,7 +50,7 @@ export const Sort = () => {
       {isVisablePopup && (
         <div className='sort__popup'>
           <ul>
-            {list.map((obj, id) => (
+            {sortList.map((obj, id) => (
               <li
                 key={id}
                 onClick={() => clickActivSelecred(obj)}
