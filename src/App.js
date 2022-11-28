@@ -5,20 +5,19 @@ import { Cart } from './pages/Cart';
 import NotFounder from './pages/NotFounder';
 import './scss/app.scss';
 import { createContext, useState } from 'react';
-
+import { FullPizza } from './pages/FullPizza';
+import { MainLayout } from './layout/MainLayout';
 
 function App() {
   return (
-    <div className='wrapper'>
-        <Header />
-        <div className='content'>
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/cart' element={<Cart />} />
-            <Route path='*' element={<NotFounder />} />
-          </Routes>
-        </div>
-    </div>
+    <Routes>
+      <Route path='/' element={<MainLayout />}>
+        <Route path='' element={<Home />} />
+        <Route path='/cart' element={<Cart />} />
+        <Route path='/pizza/:pizzaId' element={<FullPizza />} />
+        <Route path='*' element={<NotFounder />} />
+      </Route>
+    </Routes>
   );
 }
 

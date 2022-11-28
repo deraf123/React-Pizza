@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import qs from 'qs';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Categories } from '../components/Categories/Categories';
 import { Pagination } from '../components/Pagination/Pagination';
@@ -59,7 +59,11 @@ export const Home = () => {
     getFetchPizzas();
   }, [categoryId, sortType, searchValue, currentPage]);
 
-  const pizzaitem = items?.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+  const pizzaitem = items?.map((obj) => (
+    <Link key={obj.id} to={`/pizza/${obj.id}`}>
+      <PizzaBlock {...obj} />
+    </Link>
+  ));
   const skeletons = [...new Array(4)].map((_, index) => <Skeleton key={index} />);
   return (
     <div className='container'>
