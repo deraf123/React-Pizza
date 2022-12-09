@@ -1,11 +1,14 @@
 import axios from 'axios';
 import React from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-export const FullPizza = () => {
-  const [pizza, setPizza] = useState([]);
+export const FullPizza: React.FC = () => {
+  const [pizza, setPizza] = useState<{
+    imageUrl: string;
+    title: string;
+    price: number;
+  }>();
   const { pizzaId } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
@@ -24,7 +27,7 @@ export const FullPizza = () => {
     fetchPizza();
   }, []);
   if (!pizza) {
-    return 'Загрузка ...';
+    return <>'Загрузка ...'</>;
   } else {
     return (
       <div className='container'>
