@@ -6,7 +6,7 @@ import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { setSearchValue } from '../../redux/slices/filterSlice';
 
-export const Search = () => {
+export const Search: React.FC = () => {
   const dispatch = useDispatch();
   const [value, setValue] = useState('');
   const updateSearchValue = useCallback(
@@ -15,7 +15,7 @@ export const Search = () => {
     }, 200),
     [],
   );
-  const onChangeInput = (event) => {
+  const onChangeInput = (event: any) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
   };

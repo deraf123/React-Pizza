@@ -10,27 +10,30 @@ import { Sort, sortList } from '../components/Sort/Sort';
 import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 import { fetchPizzas } from '../redux/slices/pizzasSlice';
 
-export const Home = () => {
+export const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSearach = useRef(false);
   const isMounted = useRef(false);
-  const searchValue = useSelector((state) => state.filterSlice.searchValue);
-  const categoryId = useSelector((state) => state.filterSlice.categoryId);
-  const sortType = useSelector((state) => state.filterSlice.sort.sortProperty);
-  const currentPage = useSelector((state) => state.filterSlice.currentPage);
-  const { items, status } = useSelector((state) => state.pizzasSlice);
+  const searchValue = useSelector((state: any) => state.filterSlice.searchValue);
+  const categoryId = useSelector((state: any) => state.filterSlice.categoryId);
+  const sortType = useSelector((state: any) => state.filterSlice.sort.sortProperty);
+  const currentPage = useSelector((state: any) => state.filterSlice.currentPage);
+  const { items, status } = useSelector((state: any) => state.pizzasSlice);
 
-  const onclickCategory = (id) => {
-    dispatch(setCategoryId(id));
+  const onclickCategory = (index: number) => {
+    dispatch(setCategoryId(index));
   };
-  const onChangePage = (num) => {
-    dispatch(setCurrentPage(num));
+  const onChangePage = (page: number) => {
+    dispatch(setCurrentPage(page));
   };
   const getFetchPizzas = async () => {
     const search = searchValue ? `&search=${searchValue}` : '';
     const sortTypes = sortType.sortProperty;
-    dispatch(fetchPizzas({ categoryId, sortTypes, search, currentPage }));
+    dispatch(
+      //@ts-ignore
+      fetchPizzas({ categoryId, sortTypes, search, currentPage }),
+    );
 
     window.scrollTo(0, 0);
   };
@@ -59,7 +62,7 @@ export const Home = () => {
     getFetchPizzas();
   }, [categoryId, sortType, searchValue, currentPage]);
 
-  const pizzaitem = items?.map((obj) => (
+  const pizzaitem = items?.map((obj: any) => (
     <Link key={obj.id} to={`/pizza/${obj.id}`}>
       <PizzaBlock {...obj} />
     </Link>

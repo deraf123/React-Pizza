@@ -1,7 +1,7 @@
 import React from 'react';
 import { NotFounderBlock } from '../components/NotFounderBlock';
 
-const NotFounder = () => {
+const NotFounder: React.FC = () => {
   return (
     <div>
       <NotFounderBlock />
