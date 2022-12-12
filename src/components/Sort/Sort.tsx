@@ -1,24 +1,26 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectSort, setSort } from '../../redux/slices/filterSlice';
+import { useDispatch } from 'react-redux';
+import { setSort, SortPropertyEnum, SortType } from '../../redux/slices/filterSlice';
 
 type SortItem = {
   name: string;
-  sortProperty: string;
+  sortProperty: SortPropertyEnum;
 };
 type PopupClick = MouseEvent & {
   path: Node[];
 };
+type SortPopupProps = {
+  sortValue: SortType;
+};
 export const sortList: SortItem[] = [
-  { name: 'популярности', sortProperty: 'rating' },
-  { name: 'цене', sortProperty: 'price' },
-  { name: 'алфавиту', sortProperty: 'title' },
+  { name: 'популярности', sortProperty: SortPropertyEnum.RATING },
+  { name: 'цене', sortProperty: SortPropertyEnum.PRICE },
+  { name: 'алфавиту', sortProperty: SortPropertyEnum.TITLE },
 ];
-export const Sort = () => {
+export const Sort: React.FC<SortPopupProps> = React.memo(({ sortValue }) => {
   const dispatch = useDispatch();
-  const sort = useSelector(selectSort);
   const [isVisablePopup, setIsVisablePopup] = React.useState(false);
   const sortRef = useRef<HTMLDivElement>(null);
 
@@ -39,6 +41,8 @@ export const Sort = () => {
       document.body.addEventListener('click', handleClickOutside);
     };
   }, []);
+
+  console.log(sortValue.name, 'value');
   return (
     <div ref={sortRef} className='sort'>
       <div className='sort__label'>
@@ -54,7 +58,7 @@ export const Sort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setIsVisablePopup(!isVisablePopup)}>{sort.name}</span>
+        <span onClick={() => setIsVisablePopup(!isVisablePopup)}>{sortValue.name}</span>
       </div>
       {isVisablePopup && (
         <div className='sort__popup'>
@@ -63,7 +67,7 @@ export const Sort = () => {
               <li
                 key={id}
                 onClick={() => clickActivSelecred(obj)}
-                className={sort.sortProperty === obj.sortProperty ? 'active' : ''}>
+                className={sortValue.sortProperty === obj.sortProperty ? 'active' : ''}>
                 {obj.name}
               </li>
             ))}
@@ -72,4 +76,4 @@ export const Sort = () => {
       )}
     </div>
   );
-};
+});

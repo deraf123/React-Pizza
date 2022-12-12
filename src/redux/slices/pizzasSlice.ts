@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-type FetchPizzasArgs = {
+export type FetchPizzasArgs = {
   categoryId: number;
-  sortTypes: string;
+  sortBy: string;
   search: string;
   currentPage: string;
 };
@@ -16,12 +16,11 @@ type PizzaItemType = {
   sizes: number[];
   types: number[];
 };
-enum Status {
+export enum Status {
   LOADING = 'loading',
   SUCCESS = 'success',
   ERROR = 'error',
 }
-
 interface PizzaSliceState {
   items: PizzaItemType[];
   status: Status;
@@ -30,11 +29,11 @@ interface PizzaSliceState {
 export const fetchPizzas = createAsyncThunk(
   'pizza/fetchPizzasStatus',
   async (params: FetchPizzasArgs) => {
-    const { categoryId, sortTypes, search, currentPage } = params;
+    const { categoryId, sortBy, search, currentPage } = params;
     const { data } = await axios.get<PizzaItemType[]>(
       `https://63622bc666f75177ea284f2e.mockapi.io/items?page=${currentPage}&limit=4&${
         categoryId > 0 ? `category=${categoryId}` : ''
-      }${search}&sortBy=${sortTypes}&order=desc`,
+      }${search}&sortBy=${sortBy}&order=desc`,
     );
     return data as PizzaItemType[];
   },
