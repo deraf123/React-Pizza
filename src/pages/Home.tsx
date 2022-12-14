@@ -9,6 +9,7 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import { Sort, sortList } from '../components/Sort/Sort';
 import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice/slice';
 import { fetchPizzas } from '../redux/slices/pizzasSlice/asyncAction';
+import { add } from '../utils/math';
 import { FetchPizzasArgs } from '../redux/slices/pizzasSlice/types';
 import { useAppDispatch } from '../redux/store';
 
@@ -68,7 +69,7 @@ export const Home: React.FC = () => {
   useEffect(() => {
     getFetchPizzas();
   }, [categoryId, sortType, searchValue, currentPage]);
-
+  add(777, 888);
   const pizzaItem = items?.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
   const skeletons = [...new Array(4)].map((_, index) => <Skeleton key={index} />);
   console.log(sortType, 'sortType');
