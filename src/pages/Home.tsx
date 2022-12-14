@@ -7,8 +7,9 @@ import { Pagination } from '../components/Pagination/Pagination';
 import { PizzaBlock } from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import { Sort, sortList } from '../components/Sort/Sort';
-import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
-import { fetchPizzas, FetchPizzasArgs } from '../redux/slices/pizzasSlice';
+import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice/slice';
+import { fetchPizzas } from '../redux/slices/pizzasSlice/asyncAction';
+import { FetchPizzasArgs } from '../redux/slices/pizzasSlice/types';
 import { useAppDispatch } from '../redux/store';
 
 export const Home: React.FC = () => {
